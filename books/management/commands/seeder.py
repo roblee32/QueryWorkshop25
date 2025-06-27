@@ -19,7 +19,9 @@ class Command(BaseCommand):
 
         seeder = Seed.seeder()
 
-        seeder.add_entity(Author, 1000)
+        seeder.add_entity(Author, 1000, {
+            "name": lambda x: seeder.faker.name()
+        })
 
         seeder.add_entity(Library, 5, {
             'name': lambda x: seeder.faker.company(),
@@ -29,6 +31,7 @@ class Command(BaseCommand):
         seeder.add_entity(BookData, 5000, {
             "title": lambda x: seeder.faker.sentence(nb_words=3, variable_nb_words=True),
             'isbn': lambda x: seeder.faker.isbn13(),
+            "isbn_not_unique": lambda x: seeder.faker.isbn13(),
             'published_date': lambda x: seeder.faker.date_between(start_date='-50y', end_date='today'),
             'page_count': lambda x: seeder.faker.random_int(min=10, max=1000),
         })
